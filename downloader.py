@@ -64,10 +64,10 @@ class TwitterGetter(Action):
         print("target user is not protected")
 
 def check_driver():
-    if os.path.isfile("./chromedriver.exe"):
-        return "./chromedriver.exe"
+    system = platform.system()
+    if os.path.isfile(Const.driver_path[system]):
+        return Const.driver_path[system]
     elif "chromedriver" not in os.environ:
-        system = platform.system()
         url = Const.driver_urls[system]
         path = "./chromedriver.zip"
         print("We can't find chromedriver in your environ\ninstalling chrome doriver....")
@@ -77,9 +77,7 @@ def check_driver():
             existing_zip.extractall()
         print("success\n\n")
         os.remove(path)
-        if system == "Windows":
-            return "./chromedriver.exe"
-        return "./chromedrive/chromedriver.exe"
+        return Const.driver_path[system]
     else:
         return True
 
