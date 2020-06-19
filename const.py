@@ -12,3 +12,9 @@ class Const:
         "Darwin": Mac_Driver,
         "Linux": Linux_Drive
     }
+
+    driver_path = {
+        "Windows": "./chromedriver.exe",
+        "Darwin": "./chromedriver",
+        "Linux": "./chromedriver"
+    }
