@@ -1,12 +1,20 @@
-from selenium.webdriver import Chrome
+
 from bs4 import BeautifulSoup
 import sys
-from selenium.webdriver.chrome.options import Options
-from action import Action
 import requests
 import json
 import os
 import time
+
+import platform
+import urllib.request
+
+from selenium.webdriver.chrome.options import Options
+from selenium.webdriver import Chrome
+import zipfile
+
+from action import Action
+from const import Const
 
 
 class TwitterGetter(Action):
@@ -48,7 +56,28 @@ class TwitterGetter(Action):
                 pass
         print("target user is not protected")
 
+def check_driver():
+    if os.path.isfile("./chromedriver.exe"):
+        return "./chromedriver.exe"
+    elif "chromedriver" not in os.environ:
+        url = Const.driver_urls[platform.system()]
+        path = "./chromedriver.zip"
+        print("We can't find chromedriver in your environ\ninstalling chrome doriver....")
+        urllib.request.urlretrieve(url, path)
+        print(f"success download {path}\nunpacking zip...")
+        with zipfile.ZipFile(path) as existing_zip:
+            existing_zip.extractall()
+        print("success")
+        os.remove(path)
+        return "./chromedriver.exe"
+    else:
+        return True
+
+
 if __name__ == "__main__":
-    path = "C:/Program Files/chromedriver/chromedriver.exe"
+    if (pa := check_driver()) is True:
+        path = "chromedriver"
+    else:
+        path = pa
     twitter = TwitterGetter(input("please input target user id :"), path)
     twitter.download_all_image()
