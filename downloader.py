@@ -67,7 +67,8 @@ def check_driver():
     if os.path.isfile("./chromedriver.exe"):
         return "./chromedriver.exe"
     elif "chromedriver" not in os.environ:
-        url = Const.driver_urls[platform.system()]
+        system = platform.system()
+        url = Const.driver_urls[system]
         path = "./chromedriver.zip"
         print("We can't find chromedriver in your environ\ninstalling chrome doriver....")
         urllib.request.urlretrieve(url, path)
@@ -76,7 +77,9 @@ def check_driver():
             existing_zip.extractall()
         print("success\n\n")
         os.remove(path)
-        return "./chromedriver.exe"
+        if system == "Windows":
+            return "./chromedriver.exe"
+        return "./chromedrive/chromedriver.exe"
     else:
         return True
 
