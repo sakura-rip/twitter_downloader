@@ -13,8 +13,10 @@ try:
     from selenium.webdriver.chrome.options import Options
     from selenium.webdriver import Chrome
 except ImportError:
-    print("we cant find selenium module\ndownloading selenium module...")
+    print("we cant find selenium module\ndownloading selenium module...\n\n")
     os.system("pip install selenium")
+    from selenium.webdriver.chrome.options import Options
+    from selenium.webdriver import Chrome
 
 import zipfile
 
@@ -69,10 +71,10 @@ def check_driver():
         path = "./chromedriver.zip"
         print("We can't find chromedriver in your environ\ninstalling chrome doriver....")
         urllib.request.urlretrieve(url, path)
-        print(f"success download {path}\nunpacking zip...")
+        print(f"success download \nunpacking zip...\n\n")
         with zipfile.ZipFile(path) as existing_zip:
             existing_zip.extractall()
-        print("success")
+        print("success\n\n")
         os.remove(path)
         return "./chromedriver.exe"
     else:
