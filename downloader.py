@@ -9,8 +9,13 @@ import time
 import platform
 import urllib.request
 
-from selenium.webdriver.chrome.options import Options
-from selenium.webdriver import Chrome
+try:
+    from selenium.webdriver.chrome.options import Options
+    from selenium.webdriver import Chrome
+except ImportError:
+    print("we cant find selenium module\ndownloading selenium module...")
+    os.system("pip install selenium")
+
 import zipfile
 
 from action import Action
